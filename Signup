@@ -1,0 +1,117 @@
+<?php 
+session_start();
+	include("config.php");
+	include("functions.php");
+	if($_SERVER['REQUEST_METHOD'] == "POST")
+	{	//something was posted
+		$username = $_POST['username'];
+		$password = $_POST['password'];
+    $email = $_POST['email'];
+    $address = $_POST['address'];
+		if(!empty($username) && !empty($password) && !is_numeric($username))
+		{
+       
+			//save to database
+     $sql = "INSERT INTO `userinfo` (`username`, `password`, `email`, `address`) VALUES ('$username', '$password', '$email', '$address')";
+        $result = mysqli_query($conn, $sql);
+			header("Location: login.php");
+			die;
+		}else
+		{
+			echo "Please enter some valid information!";
+		}
+	}
+?>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+	 <meta charset="utf-8">
+  <meta name="viewport" conntent="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+     <a class="navbar-brand" href="#">  <img src="image/sui2.jpg"  style="max-width:10%;"  alt="..."/></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-iconn"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+          <a class="nav-link active" href="signup.php"><i class="fas fa-th-list mr-2"></i>Signup</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="login.php"><i class="fas fa-money-check-alt mr-2"></i>Login</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+<div id="carouselExampleconntrols" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="image/sui1.jpg" class="d-block w-100" alt="Wild Landscape"/>
+    </div>
+    <div class="carousel-item">
+      <img src="image/off2.jpg" class="d-block w-100" alt="Camera"/>
+    </div>
+  </div>
+  <button class="carousel-conntrol-prev" type="button" data-bs-target="#carouselExampleconntrols" data-bs-slide="prev">
+    <span class="carousel-conntrol-prev-iconn" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-conntrol-next" type="button" data-bs-target="#carouselExampleconntrols" data-bs-slide="next">
+    <span class="carousel-conntrol-next-iconn" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<div class="bg-info text-dark">
+<div class="conntainer mt-3">
+    <form action="/AthenaPhram/signup.php" method="post">
+    <div class="form-group">
+      <p class="text-center">
+        <label for="username">Username</label>
+        <input type="text" name="username" class="form-conntrol" id="username" aria-describedby="emailHelp">
+    </div>
+    <div class="form-group">
+      <p class="text-center">
+        <label for="password">Password</label>
+        <input type="password" name="password" class="form-conntrol" id="password" aria-describedby="emailHelp"> 
+    </div>
+    <div class="form-group">
+      <p class="text-center">
+        <label for="email">Email</label>
+        <input type="email" name="email" class="form-conntrol" id="password" aria-describedby="emailHelp"> 
+    </div>
+    <div class="form-group">
+      <p class="text-center">
+        <label for="address">Address</label>
+        <input type="text" name="address" class="form-conntrol" id="address" aria-describedby="emailHelp"> 
+    </div>
+    <p class="text-center">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </p>
+    </form>
+    <p class="text-end">
+    <a href="signout.php" class="link-light">Delete User</a>
+  </p>
+</div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+</html>
