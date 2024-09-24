@@ -4,6 +4,23 @@ This project is a simple ePharmacy web application developed using PHP, MySQL, J
 
 The frontend of the application is built with HTML, CSS, and Bootstrap for responsive design, while JavaScript is used for client-side interactions such as form validation and handling dynamic cart updates.
 
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Steps to Install](#steps-to-install)
+- [Project Structure](#project-structure)
+  - [Important Files](#important-files)
+- [How It Works](#how-it-works)
+  - [User Registration](#user-registration)
+  - [User Login](#user-login)
+  - [Product Display](#product-display)
+  - [Add to Cart](#add-to-cart)
+  - [Change Password](#change-password)
+- [How to Contribute](#how-to-contribute)
+- [License](#license)
+  
 ## Features
 - **User Registration**: Allows new users to register by providing their username, email, password, and address.
 - **User Login**: Existing users can log in to their account using their credentials.
@@ -109,4 +126,4 @@ The frontend of the application is built with HTML, CSS, and Bootstrap for respo
 Feel free to fork this repository and submit pull requests. Contributions are welcome.
 
 ## License
-This project is open-source and available under the MIT License.
+This project is open-source and free to use. Feel free to modify and distribute it as needed.
