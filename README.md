@@ -1,8 +1,8 @@
-# ePharmacy Web Application
+# ePharmacy Web website
 
-This project is a simple ePharmacy web application developed using PHP, MySQL, JavaScript, Bootstrap, HTML, and CSS. It allows users to browse products (medicines), register an account, log in, change their password, and manage their shopping cart. The application dynamically fetches product information from the database and allows users to add products to their shopping cart.
+This project is a simple ePharmacy website developed using PHP, MySQL, JavaScript, Bootstrap, HTML, and CSS. It allows users to browse products (medicines), register an account, log in, change their password, and manage their shopping cart. The website dynamically fetches product information from the database and allows users to add products to their shopping cart.
 
-The frontend of the application is built with HTML, CSS, and Bootstrap for responsive design, while JavaScript is used for client-side interactions such as form validation and handling dynamic cart updates.
+The frontend of the website is built with HTML, CSS, and Bootstrap for responsive design, while JavaScript is used for client-side interactions such as form validation and handling dynamic cart updates.
 
 ## Table of Contents
 
@@ -25,7 +25,7 @@ The frontend of the application is built with HTML, CSS, and Bootstrap for respo
 - **User Registration**: Allows new users to register by providing their username, email, password, and address.
 - **User Login**: Existing users can log in to their account using their credentials.
 - **Change Password**: Users can change their password if they forget it by providing their email and username.
-- **Product Display**: The application displays a list of products fetched from a MySQL database.
+- **Product Display**: The website displays a list of products fetched from a MySQL database.
 - **Add to Cart**: Users can add products to their cart by selecting the quantity.
 - **Cart Persistence**: The quantity selected for each product is saved and persisted even after reloading the page.
 
