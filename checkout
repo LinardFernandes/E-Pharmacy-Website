@@ -1,0 +1,74 @@
+<?php
+session_start();
+include("config.php");
+
+// Handle checkout submission
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $stmt = $conn->prepare("DELETE FROM cart"); // Clear the cart after checkout
+    $stmt->execute();
+    $_SESSION['message'] = "Thank you for your purchase!";
+    header("Location: Product.php");
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <a class="navbar-brand" href="Signup.php"><img src="image/logo.png" style="max-width: 10%;" alt="Brand Logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link active" href="Product.php"><i class="fas fa-th-list mr-2"></i>Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="cart.php"><i class="fas fa-shopping-cart"></i>Cart</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Checkout -->
+    <div class="container mt-5">
+        <h3 class="text-center">Checkout</h3>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <table class="table table-bordered text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $stmt = $conn->prepare("SELECT SUM(pdt_price * pdt_qty) AS grand_total FROM cart");
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        $row = $result->fetch_assoc();
+                        $grand_total = $row['grand_total'];
+                        ?>
+                        <tr>
+                            <td>$<?= number_format($grand_total, 2) ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <form method="POST" action="checkout.php">
+                    <button type="submit" class="btn btn-success btn-block">Confirm Purchase</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
