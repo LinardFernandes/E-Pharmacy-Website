@@ -1,0 +1,117 @@
+<?php
+session_start();
+include("config.php");
+
+// Handle item removal
+if (isset($_POST['remove_item'])) {
+    $id = $_POST['id'];
+
+    // Use a simple SQL query to delete the item
+    $id = mysqli_real_escape_string($conn, $id); // Sanitize the input to prevent SQL injection
+    $sql = "DELETE FROM cart WHERE id = $id";
+    $result = mysqli_query($conn, $sql);
+
+    if ($result) {
+        $_SESSION['message'] = "Item removed from the cart!";
+    } else {
+        $_SESSION['error'] = "Failed to remove item from the cart.";
+    }
+
+    header("Location: cart.php");
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <a class="navbar-brand" href="Signup.php"><img src="image/logo.png" style="max-width: 10%;" alt="Brand Logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link active" href="Product.php"><i class="fas fa-th-list mr-2"></i>Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="checkout.php"><i class="fas fa-money-check-alt mr-2"></i>Checkout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Display Messages -->
+    <div class="container mt-3">
+        <?php if (isset($_SESSION['message'])): ?>
+            <div class="alert alert-success"><?= $_SESSION['message']; unset($_SESSION['message']); ?></div>
+        <?php endif; ?>
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger"><?= $_SESSION['error']; unset($_SESSION['error']); ?></div>
+        <?php endif; ?>
+    </div>
+
+    <!-- Cart Items -->
+    <div class="container mt-5">
+        <h3 class="text-center">My Cart</h3>
+        <div class="row">
+            <div class="col-md-8">
+                <table class="table table-bordered text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $sql = "SELECT * FROM cart";
+                        $result = mysqli_query($conn, $sql);
+                        $grand_total = 0;
+                        while ($row = mysqli_fetch_assoc($result)):
+                            $total = $row['pdt_price'] * $row['pdt_qty'];
+                            $grand_total += $total;
+                        ?>
+                        <tr>
+                            <td><img src="<?= $row['pdt_image'] ?>" width="50"></td>
+                            <td><?= $row['pdt_name'] ?></td>
+                            <td>$<?= number_format($row['pdt_price'], 2) ?></td>
+                            <td><?= $row['pdt_qty'] ?></td>
+                            <td>$<?= number_format($total, 2) ?></td>
+                            <td>
+                                <!-- Remove Button -->
+                                <form method="POST" action="cart.php">
+                                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                                    <button type="submit" name="remove_item" class="btn btn-danger btn-sm">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <?php endwhile; ?>
+                        <tr>
+                            <td colspan="4" class="text-right"><strong>Grand Total:</strong></td>
+                            <td>$<?= number_format($grand_total, 2) ?></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="checkout.php" class="btn btn-success btn-block">Proceed to Checkout</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
